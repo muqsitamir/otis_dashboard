@@ -1,26 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { setSnackBar, showLoadingScreen } from '../../reusable_components/site_data/siteDataSlice';
-import { backend_url } from '../../App';
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import backendUrl from "config";
 
 export const organizationSlice = createSlice({
-  name: 'organization',
+  name: "organization",
   initialState: {
     organization: {
-        name: '',
-        cameras: [],
-        species: [],
-        can_annotate: false,
-        can_unannotate: false,
-        can_feature: false,
-        can_delete: false,
-    },  // Set to null initially until data is fetched
+      name: "",
+      cameras: [],
+      species: [],
+      can_annotate: false,
+      can_unannotate: false,
+      can_feature: false,
+      can_delete: false,
+    },
   },
   reducers: {
     setOrganization: (state, action) => {
+      // eslint-disable-next-line no-param-reassign
       state.organization = action.payload;
     },
     clearOrganization: (state) => {
+      // eslint-disable-next-line no-param-reassign
       state.organization = null;
     },
   },
@@ -32,13 +33,10 @@ export const { setOrganization, clearOrganization } = organizationSlice.actions;
 // Thunk to fetch organization data
 export const getOrganization = () => async (dispatch) => {
   try {
-    dispatch(showLoadingScreen(true));
-
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (!token) {
-      throw new Error('User is not authenticated');
+      throw new Error("User is not authenticated");
     }
 
     const config = {
@@ -47,15 +45,12 @@ export const getOrganization = () => async (dispatch) => {
       },
     };
 
-    const response = await axios.get(`${backend_url}/core/api/organization/`, config);
-     console.log(response.data)
+    const response = await axios.get(`${backendUrl}/core/api/organization/`, config);
     dispatch(setOrganization(response.data));
-
   } catch (error) {
-    console.error('Error fetching organization:', error);
-    dispatch(setSnackBar(error.message));
+    console.log(error.message);
   } finally {
-    dispatch(showLoadingScreen(false));
+    console.log(false);
   }
 };
 

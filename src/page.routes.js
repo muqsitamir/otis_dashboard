@@ -181,18 +181,19 @@ const pageRoutes = [
       {
         name: "Basic",
         key: "basic",
-        route: "/authentication/sign-in/basic",
+        route: "/authentication/sign-in",
+        // route: "/authentication/sign-in/basic",
       },
-      {
-        name: "Cover",
-        key: "cover",
-        route: "/authentication/sign-in/cover",
-      },
-      {
-        name: "Illustration",
-        key: "illustration",
-        route: "/authentication/sign-in/illustration",
-      },
+      // {
+      //   name: "Cover",
+      //   key: "cover",
+      //   route: "/authentication/sign-in/cover",
+      // },
+      // {
+      //   name: "Illustration",
+      //   key: "illustration",
+      //   route: "/authentication/sign-in/illustration",
+      // },
     ],
   },
   {

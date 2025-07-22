@@ -19,7 +19,6 @@ import PropTypes from "prop-types";
 // @mui material components
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
 
 // Otis Admin PRO React components
 import MDBox from "components/MDBox";
@@ -50,22 +49,10 @@ function Footer({ light = false }) {
             color={light ? "white" : "text"}
             fontSize={size.sm}
           >
-            &copy; {new Date().getFullYear()}, made with
-            <MDBox fontSize={size.md} color={light ? "white" : "dark"} mb={-0.5} mx={0.25}>
-              <Icon color="inherit" fontSize="inherit">
-                favorite
-              </Icon>
-            </MDBox>
-            by
-            <Link
-              href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ "
-              target="_blank"
-            >
-              <MDTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
-                &nbsp;Creative Tim&nbsp;
-              </MDTypography>
-            </Link>
-            for a better web.
+            &copy; {new Date().getFullYear()}, Computer Vision & Graphics Lab,
+            <MDTypography variant="button" fontWeight="medium" color={light ? "white" : "dark"}>
+              &nbsp;LUMS&nbsp;
+            </MDTypography>
           </MDBox>
           <MDBox
             component="ul"
@@ -84,25 +71,8 @@ function Footer({ light = false }) {
               },
             })}
           >
-            <MDBox component="li" pr={2} lineHeight={1}>
-              <Link
-                href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ "
-                target="_blank"
-              >
-                <MDTypography
-                  variant="button"
-                  fontWeight="regular"
-                  color={light ? "white" : "dark"}
-                >
-                  Creative Tim
-                </MDTypography>
-              </Link>
-            </MDBox>
             <MDBox component="li" px={2} lineHeight={1}>
-              <Link
-                href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ "
-                target="_blank"
-              >
+              <Link href="https://cvlab.lums.edu.pk/ " target="_blank">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
@@ -113,30 +83,24 @@ function Footer({ light = false }) {
               </Link>
             </MDBox>
             <MDBox component="li" px={2} lineHeight={1}>
-              <Link
-                href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ "
-                target="_blank"
-              >
+              <Link href="/ ">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Blog
+                  Research
                 </MDTypography>
               </Link>
             </MDBox>
             <MDBox component="li" pl={2} lineHeight={1}>
-              <Link
-                href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ "
-                target="_blank"
-              >
+              <Link href="/ ">
                 <MDTypography
                   variant="button"
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  License
+                  Team
                 </MDTypography>
               </Link>
             </MDBox>

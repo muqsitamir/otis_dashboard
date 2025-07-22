@@ -1,33 +1,10 @@
-/**
-=========================================================
-* Otis Admin PRO - v2.0.2
-=========================================================
-
-* Product Page: https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
-// react-router-dom components
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import Joi from "joi";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 
 // Otis Admin PRO React components
 import MDBox from "components/MDBox";
@@ -39,12 +16,71 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/lums.jpg";
+
+// Backend URL
+import backendUrl from "config";
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
+  const [data, setData] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const schema = {
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().min(8).required().label("Password"),
+  };
+  const validate = () => {
+    const options = { abortEarly: false };
+    const { error } = Joi.object(schema).validate(data, options);
+
+    if (!error) return null;
+
+    const newErrors = {};
+    error.details.forEach((item) => {
+      newErrors[item.path[0]] = item.message;
+    });
+
+    return newErrors;
+  };
+
+  const handleChange = ({ target: input }) => {
+    const newData = { ...data, [input.name]: input.value };
+    setData(newData);
+
+    const obj = { [input.name]: input.value };
+    const subSchema = { [input.name]: schema[input.name] };
+    const { error } = Joi.object(subSchema).validate(obj);
+    const newErrors = { ...errors };
+    if (error) newErrors[input.name] = error.details[0].message;
+    else delete newErrors[input.name];
+    setErrors(newErrors);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors || {});
+    if (validationErrors) return;
+
+    try {
+      setIsSubmitting(true);
+      const res = await axios.post(`${backendUrl}/accounts/api/token/login/`, data);
+      localStorage.setItem("token", res.data.auth_token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      const { state } = location;
+      navigate(state?.from?.pathname || "/", { replace: true });
+    } catch (err) {
+      const serverError = err.response?.data?.non_field_errors?.[0] || "Login failed";
+      setErrors({ ...errors, password: serverError });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -63,65 +99,45 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-          </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <form onSubmit={handleSubmit}>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="text"
+                label="Username"
+                name="username"
+                value={data.username}
+                onChange={handleChange}
+                error={!!errors.username}
+                helperText={errors.username}
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
+              <MDInput
+                type="password"
+                label="Password"
+                name="password"
+                value={data.password}
+                onChange={handleChange}
+                error={!!errors.password}
+                helperText={errors.password}
+                fullWidth
+              />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Signing in..." : "Sign in"}
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up/cover"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
+          </form>
         </MDBox>
       </Card>
     </BasicLayout>

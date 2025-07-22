@@ -19,7 +19,6 @@ import { useState, useEffect } from "react";
 import Divider from "@mui/material/Divider";
 import Switch from "@mui/material/Switch";
 import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
 // Otis Admin PRO React components
@@ -134,9 +133,9 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">Material UI Configurator</MDTypography>
+          <MDTypography variant="h5">UI Configurator</MDTypography>
           <MDTypography variant="body2" color="text">
-            See our dashboard options.
+            Dashboard Controls.
           </MDTypography>
         </MDBox>
 
@@ -287,32 +286,6 @@ function Configurator() {
           <Switch checked={darkMode} onChange={handleDarkMode} />
         </MDBox>
         <Divider />
-        <MDBox mt={3} mb={2}>
-          <MDBox mb={2}>
-            <MDButton
-              component={Link}
-              href="https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/"
-              target="_blank"
-              rel="noreferrer"
-              color="info"
-              variant="contained"
-              fullWidth
-            >
-              buy now
-            </MDButton>
-          </MDBox>
-          <MDButton
-            component={Link}
-            href="https://www.creative-tim.com/learning-lab/material-ui-marketplace/quick-start/otis-admin/"
-            target="_blank"
-            rel="noreferrer"
-            color={darkMode ? "light" : "dark"}
-            variant="outlined"
-            fullWidth
-          >
-            view documentation
-          </MDButton>
-        </MDBox>
       </MDBox>
     </ConfiguratorRoot>
   );

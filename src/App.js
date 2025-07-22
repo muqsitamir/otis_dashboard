@@ -29,6 +29,7 @@ import MDBox from "components/MDBox";
 // Otis Admin PRO React example components
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
+import SignInBasic from "layouts/authentication/sign-in/basic";
 
 // Otis Admin PRO React themes
 import theme from "assets/theme";
@@ -50,10 +51,15 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+import brandWhite from "assets/images/favicon_panda.ico";
+import brandDark from "assets/images/favicon_panda_white.ico";
+import { useDispatch } from "react-redux";
+import { getOrganization } from "./features/organization/organizationSlice";
+// import { getCameras } from "./features/cameras/cameraSlice";
 
 export default function App() {
+  const loginStatus = localStorage.getItem("token");
+  const dispatchRedux = useDispatch();
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
@@ -103,7 +109,11 @@ export default function App() {
     document.body.setAttribute("dir", direction);
   }, [direction]);
 
-  // Setting page scroll to 0 when changing the route
+  useEffect(() => {
+    dispatchRedux(getOrganization());
+    // dispatch(getCameras());
+  }, [dispatch]);
+
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -146,53 +156,93 @@ export default function App() {
     </MDBox>
   );
 
-  return direction === "rtl" ? (
-    <CacheProvider value={rtlCache}>
-      <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
-        <CssBaseline />
-        {layout === "dashboard" && (
-          <>
-            <Sidenav
-              color={sidenavColor}
-              brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Otis Admin PRO"
-              routes={routes}
-              onMouseEnter={handleOnMouseEnter}
-              onMouseLeave={handleOnMouseLeave}
+  let appContent;
+
+  if (loginStatus) {
+    if (direction === "rtl") {
+      appContent = (
+        <CacheProvider value={rtlCache}>
+          <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+            <CssBaseline />
+            {layout === "dashboard" && (
+              <>
+                <Sidenav
+                  color={sidenavColor}
+                  brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                  brandName="Otis Admin PRO"
+                  routes={routes}
+                  onMouseEnter={handleOnMouseEnter}
+                  onMouseLeave={handleOnMouseLeave}
+                />
+                <Configurator />
+                {configsButton}
+              </>
+            )}
+            {layout === "vr" && <Configurator />}
+            <Routes>
+              {getRoutes(routes)}
+              <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+              <Route
+                path="/authentication/sign-in"
+                element={<Navigate to="/dashboards/analytics" />}
+              />
+            </Routes>
+          </ThemeProvider>
+        </CacheProvider>
+      );
+    } else {
+      appContent = (
+        <ThemeProvider theme={darkMode ? themeDark : theme}>
+          <CssBaseline />
+          {layout === "dashboard" && (
+            <>
+              <Sidenav
+                color={sidenavColor}
+                brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+                brandName="Camera Trap"
+                routes={routes}
+                onMouseEnter={handleOnMouseEnter}
+                onMouseLeave={handleOnMouseLeave}
+              />
+              <Configurator />
+              {configsButton}
+            </>
+          )}
+          {layout === "vr" && <Configurator />}
+          <Routes>
+            <Route
+              path="/authentication/sign-in"
+              element={<Navigate to="/dashboards/analytics" />}
             />
-            <Configurator />
-            {configsButton}
-          </>
-        )}
-        {layout === "vr" && <Configurator />}
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+          </Routes>
+        </ThemeProvider>
+      );
+    }
+  } else if (direction === "rtl") {
+    appContent = (
+      <CacheProvider value={rtlCache}>
+        <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/authentication/sign-in" element={<SignInBasic />} />
+            <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
+          </Routes>
+        </ThemeProvider>
+      </CacheProvider>
+    );
+  } else {
+    appContent = (
+      <ThemeProvider theme={darkMode ? themeDark : theme}>
+        <CssBaseline />
         <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+          <Route path="/authentication/sign-in" element={<SignInBasic />} />
+          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         </Routes>
       </ThemeProvider>
-    </CacheProvider>
-  ) : (
-    <ThemeProvider theme={darkMode ? themeDark : theme}>
-      <CssBaseline />
-      {layout === "dashboard" && (
-        <>
-          <Sidenav
-            color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Otis Admin PRO"
-            routes={routes}
-            onMouseEnter={handleOnMouseEnter}
-            onMouseLeave={handleOnMouseLeave}
-          />
-          <Configurator />
-          {configsButton}
-        </>
-      )}
-      {layout === "vr" && <Configurator />}
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
-      </Routes>
-    </ThemeProvider>
-  );
+    );
+  }
+
+  return appContent;
 }

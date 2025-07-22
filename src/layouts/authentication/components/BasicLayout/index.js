@@ -23,11 +23,11 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 
 // Otis Admin PRO React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+// import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Otis Admin PRO React page layout routes
-import pageRoutes from "page.routes";
+// import pageRoutes from "page.routes";
 
 // Authentication pages components
 import Footer from "layouts/authentication/components/Footer";
@@ -35,16 +35,16 @@ import Footer from "layouts/authentication/components/Footer";
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
-        routes={pageRoutes}
-        action={{
-          type: "external",
-          route: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ ",
-          label: "buy now",
-        }}
-        transparent
-        light
-      />
+      {/* <DefaultNavbar */}
+      {/*  routes={pageRoutes} */}
+      {/*  action={{ */}
+      {/*    type: "external", */}
+      {/*    route: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/ ", */}
+      {/*    label: "buy now", */}
+      {/*  }} */}
+      {/*  transparent */}
+      {/*  light */}
+      {/* /> */}
       <MDBox
         position="absolute"
         width="100%"

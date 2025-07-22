@@ -18,52 +18,39 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
 
 // Otis Admin PRO React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Otis Admin PRO React base styles
-import typography from "assets/theme/base/typography";
+import typography from "../../assets/theme/base/typography";
 
 function Footer({
-  company = {
-    href: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/",
-    name: "Creative Tim",
-  },
   links = [
     {
-      href: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/",
-      name: "Creative Tim",
-    },
-    {
-      href: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/",
+      href: "https://cvlab.lums.edu.pk/",
       name: "About Us",
     },
     {
-      href: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/",
-      name: "Blog",
+      href: "/",
+      name: "Research",
     },
     {
-      href: "https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/",
-      name: "License",
+      href: "/",
+      name: "Team",
     },
   ],
 }) {
-  const { href, name } = company;
-  const { size } = typography;
-
   const renderLinks = () =>
     links.map((link) => (
       <MDBox key={link.name} component="li" px={2} lineHeight={1}>
-        <Link href={link.href} target="_blank">
+        <Link href={link.href}>
           <MDTypography variant="button" fontWeight="regular" color="text">
             {link.name}
           </MDTypography>
         </Link>
       </MDBox>
     ));
+  const { size } = typography;
 
   return (
     <MDBox
@@ -81,21 +68,11 @@ function Footer({
         flexWrap="wrap"
         color="text"
         fontSize={size.sm}
-        px={1.5}
       >
-        &copy; {new Date().getFullYear()}, made with
-        <MDBox fontSize={size.md} color="text" mb={-0.5} mx={0.25}>
-          <Icon color="inherit" fontSize="inherit">
-            favorite
-          </Icon>
-        </MDBox>
-        by
-        <Link href={href} target="_blank">
-          <MDTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
-          </MDTypography>
-        </Link>
-        for a better web.
+        &copy; {new Date().getFullYear()}, Computer Vision & Graphics Lab,
+        <MDTypography variant="button" fontWeight="medium" color="dark">
+          &nbsp;LUMS&nbsp;
+        </MDTypography>
       </MDBox>
       <MDBox
         component="ul"
@@ -122,7 +99,6 @@ function Footer({
 
 // Typechecking props for the Footer
 Footer.propTypes = {
-  company: PropTypes.instanceOf(Object),
   links: PropTypes.instanceOf(Array),
 };
 

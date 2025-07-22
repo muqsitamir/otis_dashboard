@@ -60,26 +60,29 @@ import ProductPage from "layouts/ecommerce/products/product-page";
 import OrderList from "layouts/ecommerce/orders/order-list";
 import OrderDetails from "layouts/ecommerce/orders/order-details";
 import SignInBasic from "layouts/authentication/sign-in/basic";
-import SignInCover from "layouts/authentication/sign-in/cover";
-import SignInIllustration from "layouts/authentication/sign-in/illustration";
+// import SignInCover from "layouts/authentication/sign-in/cover";
+// import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
+import Logout from "layouts/authentication/Logout/Logout";
 
 // Otis Admin PRO React components
 import MDAvatar from "components/MDAvatar";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import backendUrl from "./config";
 
-// Images
-import profilePicture from "assets/images/team-3.jpg";
+const profilePicture = localStorage.getItem("user")
+  ? `${backendUrl}${JSON.parse(localStorage.getItem("user")).profile_picture}`
+  : "";
 
 const routes = [
   {
     type: "collapse",
-    name: "Brooklyn Alice",
-    key: "brooklyn-alice",
-    icon: <MDAvatar src={profilePicture} alt="Brooklyn Alice" size="sm" />,
+    name: "Profile Picture",
+    key: "profile-picture",
+    icon: <MDAvatar src={profilePicture} alt="Profile Picture" size="sm" />,
     collapse: [
       {
         name: "My Profile",
@@ -96,8 +99,8 @@ const routes = [
       {
         name: "Logout",
         key: "logout",
-        route: "/authentication/sign-in/basic",
-        component: <SignInBasic />,
+        route: "/authentication/logout",
+        component: <Logout />,
       },
     ],
   },
@@ -307,21 +310,22 @@ const routes = [
           {
             name: "Basic",
             key: "basic",
-            route: "/authentication/sign-in/basic",
+            route: "/authentication/sign-in",
+            // route: "/authentication/sign-in/basic",
             component: <SignInBasic />,
           },
-          {
-            name: "Cover",
-            key: "cover",
-            route: "/authentication/sign-in/cover",
-            component: <SignInCover />,
-          },
-          {
-            name: "Illustration",
-            key: "illustration",
-            route: "/authentication/sign-in/illustration",
-            component: <SignInIllustration />,
-          },
+          // {
+          //   name: "Cover",
+          //   key: "cover",
+          //   route: "/authentication/sign-in/cover",
+          //   component: <SignInCover />,
+          // },
+          // {
+          //   name: "Illustration",
+          //   key: "illustration",
+          //   route: "/authentication/sign-in/illustration",
+          //   component: <SignInIllustration />,
+          // },
         ],
       },
       {
