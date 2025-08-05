@@ -73,9 +73,15 @@ import MDAvatar from "components/MDAvatar";
 import Icon from "@mui/material/Icon";
 import backendUrl from "./config";
 
-const profilePicture = localStorage.getItem("user")
-  ? `${backendUrl}${JSON.parse(localStorage.getItem("user")).profile_picture}`
-  : "";
+let profilePicture = "";
+try {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.profile_picture) {
+    profilePicture = `${backendUrl}${user.profile_picture}`;
+  }
+} catch (e) {
+  console.error("Failed to parse user from localStorage:", e);
+}
 
 const routes = [
   {

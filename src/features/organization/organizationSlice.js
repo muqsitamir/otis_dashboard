@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import backendUrl from "config";
+import backendUrl from "../../config";
 
 export const organizationSlice = createSlice({
   name: "organization",
@@ -38,6 +38,8 @@ export const getOrganization = () => async (dispatch) => {
     if (!token) {
       throw new Error("User is not authenticated");
     }
+
+    console.log("backendUrl is: ", backendUrl); // 👈 Add it here
 
     const config = {
       headers: {
