@@ -19,7 +19,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/lums.jpg";
 
 // Backend URL
-import backendUrl from "config";
+import backendUrl from "../../../../config";
 
 function Basic() {
   const [data, setData] = useState({ username: "", password: "" });

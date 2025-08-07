@@ -40,9 +40,9 @@ const pageRoutes = [
     icon: <Icon>dashboard</Icon>,
     collapse: [
       {
-        name: "Analytics",
-        key: "analytics",
-        route: "/dashboards/analytics",
+        name: "Cameras",
+        key: "cameras",
+        route: "/dashboards/cameras",
       },
       {
         name: "Sales",

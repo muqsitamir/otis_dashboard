@@ -36,7 +36,7 @@ Coded by www.creative-tim.com
 */
 
 // Otis Admin PRO React layouts
-import Analytics from "layouts/dashboards/analytics";
+import Cameras from "layouts/dashboards/cameras";
 import Sales from "layouts/dashboards/sales";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
@@ -73,9 +73,15 @@ import MDAvatar from "components/MDAvatar";
 import Icon from "@mui/material/Icon";
 import backendUrl from "./config";
 
-const profilePicture = localStorage.getItem("user")
-  ? `${backendUrl}${JSON.parse(localStorage.getItem("user")).profile_picture}`
-  : "";
+let profilePicture = "";
+try {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.profile_picture) {
+    profilePicture = `${backendUrl}${user.profile_picture}`;
+  }
+} catch (e) {
+  console.error("Failed to parse user from localStorage:", e);
+}
 
 const routes = [
   {
@@ -112,10 +118,10 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     collapse: [
       {
-        name: "Analytics",
-        key: "analytics",
-        route: "/dashboards/analytics",
-        component: <Analytics />,
+        name: "Cameras",
+        key: "Cameras",
+        route: "/dashboards/cameras",
+        component: <Cameras />,
       },
       {
         name: "Sales",

@@ -30,7 +30,7 @@ import MDTypography from "components/MDTypography";
 import SalesTable from "examples/Tables/SalesTable";
 
 // Data
-import salesTableData from "layouts/dashboards/analytics/components/SalesByCountry/data/salesTableData";
+import salesTableData from "layouts/dashboards/cameras/components/SalesByCountry/data/salesTableData";
 
 function SalesByCountry() {
   return (

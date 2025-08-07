@@ -13,6 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { selectCameras } from "features/cameras/cameraSlice";
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
@@ -26,42 +30,75 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import BookingCard from "examples/Cards/BookingCard";
+// import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
+// import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
+// import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import CameraCard from "examples/Cards/CameraCard";
 
 // Anaytics dashboard components
-import SalesByCountry from "layouts/dashboards/analytics/components/SalesByCountry";
+// import SalesByCountry from "layouts/dashboards/cameras/components/SalesByCountry";
 
 // Data
-import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineChartData";
+// import reportsBarChartData from "layouts/dashboards/cameras/data/reportsBarChartData";
+// import reportsLineChartData from "layouts/dashboards/cameras/data/reportsLineChartData";
+import backendUrl from "../../../config";
 
-// Images
-import booking1 from "assets/images/products/product-1-min.jpg";
-import booking2 from "assets/images/products/product-2-min.jpg";
-import booking3 from "assets/images/products/product-3-min.jpg";
+function getTimeSince(dateString) {
+  if (!dateString) return "N/A";
 
-function Analytics() {
-  const { sales, tasks } = reportsLineChartData;
+  const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
+  if (seconds < 0 || Number.isNaN(seconds)) return "N/A"; // handle invalid/future dates
 
-  // Action buttons for the BookingCard
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  const parts = [];
+  if (days > 0) parts.push(`${days} day${days !== 1 ? "s" : ""}`);
+  if (hours > 0) parts.push(`${hours} hour${hours !== 1 ? "s" : ""}`);
+  if (minutes > 0 && days === 0) parts.push(`${minutes} minute${minutes !== 1 ? "s" : ""}`);
+
+  return parts.length > 0 ? `${parts.join(" ")} ago` : "just now";
+}
+function Cameras() {
+  // const { sales, tasks } = reportsLineChartData;
+
+  const dispatch = useDispatch();
+  const cameraData = useSelector(selectCameras);
+  const [stream, setStream] = useState(cameraData.results);
+
+  useEffect(() => {
+    const fetchCameras = async () => {
+      const response = await fetch(`${backendUrl}/core/api/sse/cameras`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const updatedCameras = await response.json();
+      setStream(updatedCameras);
+    };
+
+    fetchCameras();
+
+    const intervalId = setInterval(fetchCameras, 15000);
+
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
+
+  // Action buttons for the CameraCard
   const actionButtons = (
     <>
-      <Tooltip title="Refresh" placement="bottom">
-        <MDTypography
-          variant="body1"
-          color="primary"
-          lineHeight={1}
-          sx={{ cursor: "pointer", mx: 3 }}
-        >
-          <Icon color="inherit">refresh</Icon>
-        </MDTypography>
-      </Tooltip>
-      <Tooltip title="Edit" placement="bottom">
+      {/* <Tooltip title="Refresh" placement="bottom">
         <MDTypography variant="body1" color="info" lineHeight={1} sx={{ cursor: "pointer", mx: 3 }}>
-          <Icon color="inherit">edit</Icon>
+          <Icon color="inherit">info</Icon>
+        </MDTypography>
+      </Tooltip> */}
+      <Tooltip title="Info" placement="bottom">
+        <MDTypography variant="body1" color="info" lineHeight={1} sx={{ cursor: "pointer", mx: 3 }}>
+          <Icon color="inherit">info_outline</Icon>
         </MDTypography>
       </Tooltip>
     </>
@@ -71,7 +108,7 @@ function Analytics() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container>
+        {/* <Grid container>
           <SalesByCountry />
         </Grid>
         <MDBox mt={6}>
@@ -177,45 +214,25 @@ function Analytics() {
               </MDBox>
             </Grid>
           </Grid>
-        </MDBox>
+        </MDBox> */}
         <MDBox mt={2}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking1}
-                  title="Cozy 5 Stars Apartment"
-                  description='The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Barcelona.'
-                  price="$899/night"
-                  location="Barcelona, Spain"
-                  action={actionButtons}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking2}
-                  title="Office Studio"
-                  description='The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.'
-                  price="$1.119/night"
-                  location="London, UK"
-                  action={actionButtons}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking3}
-                  title="Beautiful Castle"
-                  description='The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Milan.'
-                  price="$459/night"
-                  location="Milan, Italy"
-                  action={actionButtons}
-                />
-              </MDBox>
-            </Grid>
+            {stream.map((camera) => (
+              <Grid item xs={12} md={6} lg={4} key={camera.id}>
+                <MDBox mt={3}>
+                  <CameraCard
+                    image={`${backendUrl}/media/${camera.latest_event}`}
+                    title={camera.description}
+                    // description={`Lat: ${camera.latitude}, Lng: ${camera.longitude}`}
+                    update={`${getTimeSince(camera.last_captured_at)}`}
+                    event={`${getTimeSince(camera.last_uploaded_at)}`}
+                    seen={`${getTimeSince(camera.last_reported_at)}`}
+                    isActive={camera.live}
+                    action={actionButtons}
+                  />
+                </MDBox>
+              </Grid>
+            ))}
           </Grid>
         </MDBox>
       </MDBox>
@@ -224,4 +241,4 @@ function Analytics() {
   );
 }
 
-export default Analytics;
+export default Cameras;

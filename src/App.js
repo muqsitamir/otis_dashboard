@@ -50,12 +50,24 @@ import routes from "routes";
 // Otis Admin PRO React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
+import axios from "axios";
+
 // Images
 import brandWhite from "assets/images/favicon_panda.ico";
 import brandDark from "assets/images/favicon_panda_white.ico";
 import { useDispatch } from "react-redux";
 import { getOrganization } from "./features/organization/organizationSlice";
-// import { getCameras } from "./features/cameras/cameraSlice";
+import { getCameras } from "./features/cameras/cameraSlice";
+
+// Debug all axios URLs globally
+axios.interceptors.request.use((config) => {
+  if (config.url.includes("null") || config.url.includes("undefined")) {
+    console.trace("🚨 Bad URL detected:", config.url);
+  } else {
+    console.log("➡️ Axios Request to:", config.url);
+  }
+  return config;
+});
 
 export default function App() {
   const loginStatus = localStorage.getItem("token");
@@ -107,11 +119,23 @@ export default function App() {
   // Setting the dir attribute for the body element
   useEffect(() => {
     document.body.setAttribute("dir", direction);
+
+    // ⛔️ Detect broken image URLs
+    window.addEventListener(
+      "error",
+      (e) => {
+        if (e.target.tagName === "IMG") {
+          console.warn("🚨 Broken image detected:", e.target.src);
+          console.trace("📍 Stack trace for broken image:");
+        }
+      },
+      true // Use capture phase to catch errors properly
+    );
   }, [direction]);
 
   useEffect(() => {
     dispatchRedux(getOrganization());
-    // dispatch(getCameras());
+    dispatchRedux(getCameras());
   }, [dispatch]);
 
   useEffect(() => {
@@ -181,10 +205,10 @@ export default function App() {
             {layout === "vr" && <Configurator />}
             <Routes>
               {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+              <Route path="*" element={<Navigate to="/dashboards/cameras" />} />
               <Route
                 path="/authentication/sign-in"
-                element={<Navigate to="/dashboards/analytics" />}
+                element={<Navigate to="/dashboards/cameras" />}
               />
             </Routes>
           </ThemeProvider>
@@ -199,7 +223,7 @@ export default function App() {
               <Sidenav
                 color={sidenavColor}
                 brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-                brandName="Camera Trap"
+                brandName="Leapord Dashboard"
                 routes={routes}
                 onMouseEnter={handleOnMouseEnter}
                 onMouseLeave={handleOnMouseLeave}
@@ -210,12 +234,9 @@ export default function App() {
           )}
           {layout === "vr" && <Configurator />}
           <Routes>
-            <Route
-              path="/authentication/sign-in"
-              element={<Navigate to="/dashboards/analytics" />}
-            />
+            <Route path="/authentication/sign-in" element={<Navigate to="/dashboards/cameras" />} />
             {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+            <Route path="*" element={<Navigate to="/dashboards/cameras" />} />
           </Routes>
         </ThemeProvider>
       );

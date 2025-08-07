@@ -1,4 +1,4 @@
-# [Otis Admin PRO](http://demos.creative-tim.com/otis-admin-pro/#/dashboards/analytics?ref=readme-oap) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://material-ui.com/store/items/otis-admin-pro&text=Check%20Otis%20Admin%202%20Pro%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#materialdesign%20#react%20https://material-ui.com/store/items/otis-admin-pro)
+# [Otis Admin PRO](http://demos.creative-tim.com/otis-admin-pro/#/dashboards/cameras?ref=readme-oap) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://material-ui.com/store/items/otis-admin-pro&text=Check%20Otis%20Admin%202%20Pro%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#materialdesign%20#react%20https://material-ui.com/store/items/otis-admin-pro)
 
 ![version](https://img.shields.io/badge/version-2.0.2-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/otis-admin-pro.svg)](https://github.com/creativetimofficial/otis-admin-pro/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/otis-admin-pro.svg)](https://github.com/creativetimofficial/otis-admin-pro/issues?q=is%3Aissue+is%3Aclosed)
 
@@ -24,7 +24,7 @@ You can read more about the [documentation here](https://www.creative-tim.com/le
 
 If you want to get inspiration or just show something directly to your clients, you can jump-start your development with our pre-built example pages. You will be able to quickly set up the basic structure for your web project.
 
-View [example pages here](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/analytics).
+View [example pages here](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/cameras).
 
 **HELPFUL LINKS**
 
@@ -76,7 +76,7 @@ Let us know your thoughts below. And good luck with development!
 
 ## Demo
 
-- [Dashboard](http://demos.creative-tim.com/otis-admin-pro/#/dashboards/analytics?ref=readme-oap)
+- [Dashboard](http://demos.creative-tim.com/otis-admin-pro/#/dashboards/cameras?ref=readme-oap)
 - [Sales](http://demos.creative-tim.com/otis-admin-pro/#/dashboards/sales?ref=readme-oap)
 - [Profile](https://demos.creative-tim.com/otis-admin-pro/#/pages/profile/profile-overview?ref=readme-oap)
 - [Account](https://demos.creative-tim.com/otis-admin-pro/#/pages/account/settings?ref=readme-oap)
@@ -86,7 +86,7 @@ Let us know your thoughts below. And good luck with development!
 - [Sign In](https://demos.creative-tim.com/otis-admin-pro/#/authentication/sign-in/basic?ref=readme-oap)
 - [Sign Up](https://demos.creative-tim.com/otis-admin-pro/#/authentication/sign-up/cover?ref=readme-oap)
 
-[View More](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/analytics?ref=readme-oap).
+[View More](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/cameras?ref=readme-oap).
 
 ## Quick start
 
@@ -173,7 +173,7 @@ otis-admin-pro
     │   │   │    ├── sign-in
     │   │   │    └── sign-up
     │   │   ├── dashboards
-    │   │   │    ├── analytics
+    │   │   │    ├── cameras
     │   │   │    └── sales
     │   │   ├── ecommerce
     │   │   │    ├── orders
@@ -209,7 +209,7 @@ At present, we officially aim to support the last two versions of the following 
 
 ## Resources
 
-- [Live Preview](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/analytics?ref=readme-oap)
+- [Live Preview](https://demos.creative-tim.com/otis-admin-pro/#/dashboards/cameras?ref=readme-oap)
 - [Buy Page](https://material-ui.com/store/items/otis-admin-pro-material-dashboard-react/?ref=readme-oap)
 - Documentation is [here](https://www.creative-tim.com/learning-lab/material-ui-marketplace/overview/otis-admin/?ref=readme-oap)
 - [License Agreement](https://www.creative-tim.com/license?ref=readme-oap)
