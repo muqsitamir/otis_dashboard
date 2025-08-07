@@ -205,10 +205,10 @@ export default function App() {
             {layout === "vr" && <Configurator />}
             <Routes>
               {getRoutes(routes)}
-              <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+              <Route path="*" element={<Navigate to="/dashboards/cameras" />} />
               <Route
                 path="/authentication/sign-in"
-                element={<Navigate to="/dashboards/analytics" />}
+                element={<Navigate to="/dashboards/cameras" />}
               />
             </Routes>
           </ThemeProvider>
@@ -234,12 +234,9 @@ export default function App() {
           )}
           {layout === "vr" && <Configurator />}
           <Routes>
-            <Route
-              path="/authentication/sign-in"
-              element={<Navigate to="/dashboards/analytics" />}
-            />
+            <Route path="/authentication/sign-in" element={<Navigate to="/dashboards/cameras" />} />
             {getRoutes(routes)}
-            <Route path="*" element={<Navigate to="/dashboards/analytics" />} />
+            <Route path="*" element={<Navigate to="/dashboards/cameras" />} />
           </Routes>
         </ThemeProvider>
       );

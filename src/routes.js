@@ -36,7 +36,7 @@ Coded by www.creative-tim.com
 */
 
 // Otis Admin PRO React layouts
-import Analytics from "layouts/dashboards/analytics";
+import Cameras from "layouts/dashboards/cameras";
 import Sales from "layouts/dashboards/sales";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
@@ -118,10 +118,10 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     collapse: [
       {
-        name: "Analytics",
-        key: "analytics",
-        route: "/dashboards/analytics",
-        component: <Analytics />,
+        name: "Cameras",
+        key: "Cameras",
+        route: "/dashboards/cameras",
+        component: <Cameras />,
       },
       {
         name: "Sales",
